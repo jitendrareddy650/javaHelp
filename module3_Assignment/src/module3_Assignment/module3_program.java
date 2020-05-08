@@ -15,16 +15,12 @@ package module3_Assignment;
 
 import java.util.Scanner;
 
-abstract class AC {
-	abstract void acName(String name);
-	abstract void myBalance(int balance);
-	abstract void acdetails(int id, int balance);
-	abstract void deposite(int amount);
-	abstract void withdraw(int amount);
-	
-}
-class sbAccount extends AC{ // child class
+class AC {
 	int balance;
+	int id;
+	String name;
+	int amount;
+	
 	void acName(String name) {
 		System.out.println("Your account name is "+name);
 	}
@@ -37,16 +33,55 @@ class sbAccount extends AC{ // child class
 	}
 	void deposite(int amount) { //how i can add my amount to my balance i am not able to add using inheritance
 		balance += amount;
-		System.out.println("Payment Deposited sucessfully ! Thanks for using" + balance);
+		System.out.println("Payment "+ amount +" Deposited sucessfully ! After deposite " + balance);
 	}
+	
 	void withdraw(int amount) {
+		if(amount>balance) {
+			System.out.println("Balance is too low to withdrawn");
+		}
+		else {
+			balance -= amount;
+			System.out.println("Amount "+ amount +" withdrawn sucessfully ! After withdrawn balance is "+balance);
+		}
+				
+	}
+	void calculateintrest(double balance) {
+		double it = (balance * 1);
+		System.out.println("Your account is not SB account so no intrest applied ");
 		
-		System.out.println("Amount withdrawn sucessfully ! Thanks for visit");
 	}
 	
 }
+class sbAccount extends AC{ // child class
+	sbAccount(int balance, int id, String name, int amount){
+		this.balance=balance;
+		this.id = id;
+		this.name = name;
+		this.amount = amount;
+		
+		
+		System.out.println("Your Saving Bank Account created sucessfully !");
+	}
+
+	void calculateintrest(double balance) {
+		System.out.println("Congratulation ! Your SB Account applies 4% interest");
+		double it = (balance * 4) / 100;
+		System.out.println("Your interest for one month is " + it);
+	}
 	
+}
+class currentAccount extends AC{ // child class
+	currentAccount(int balance, int id, String name, int amount){
+		this.balance=balance;
+		this.id = id;
+		this.name = name;
+		this.amount = amount;
+		
+		System.out.println("Your Current Bank Account created sucessfully !");
+	}
 	
+}	
 	
 public class module3_program {
 
@@ -59,112 +94,46 @@ public static void main(String[] args) {
 	System.out.println("1. Saving Account");
 	System.out.println("2. Current Account");
 	
-	//AC ac = null;//new AC();
-	sbAccount sb = new sbAccount();
-	/*
-	SB sb = new SB();
-	CA ca =	new CA();
-	*/
+	AC ac = null;// AC();
+	//sbAccount sb = new sbAccount();
+	
+	
+	//CA ca =	new CA();
+	
 	AC_type = input.nextInt();
 	
 	System.out.println("Enter your account name :");
 	String AC_Name = input.next();
 	System.out.println("Enter your account number as per your desire :");
 	int id = input.nextInt();
-	System.out.println("Enter your amount you want to deposite :");
+	System.out.println("Enter your initial amount you want to deposite :");
 	int balance = input.nextInt();
 	
-	sb.acName(AC_Name);
-	sb.acdetails(id, balance);
-	sb.deposite(1000);
+			switch (AC_type) {
 
-			
-	input.close();
-}
+			case 1:
+				ac = new sbAccount(balance, id, AC_Name, 0);
+				break;
+			case 2:
+				ac = new currentAccount(balance, id, AC_Name, 0);
+				break;
+			}
+	
+			ac.acName(AC_Name);
+			ac.acdetails(id, balance);
+			ac.deposite(1000);
+			ac.withdraw(500);
+			ac.calculateintrest(balance);
 
+			input.close();
+		
+	}
 }
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/*
-	double balance;
-	
-	AC() {
-		balance = 10000;
-		System.out.println("Account object constructed");
-		
-	}
-	void showAcDetails(int AC_no, String AC_Name) {
-		System.out.println(" Your account has been created sucessfully !");
-		System.out.println(" Your account name is :" + AC_Name + " A/C number is" + AC_no);
-		System.out.println(" Your current balance is :" + balance);
-	}	
-	void deposit(double amount) { // Deposit function
-		this.balance += amount;
-		System.out.println("Balance after deposite :" + balance);
-	}
-	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	void withdraw(double amount) { // Withdraw function
-		
-		if(amount>balance) {
-			System.out.println("Balance is too low to withdrawn");
-		}
-		else {
-			this.balance -= amount;
-		}
-	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
-	}
-	void calculateintrest(double balance) {
-		double it = (balance * 4) / 100;
-		System.out.println("After intrest of one month balance is " + it);
-	}
-	
-}	
-class SB extends AC{
-	int intrest;
-	SB(){
-		
-		System.out.println("SB account object consturcted");
-		super.balance = balance;
-	}
-	
-	void deposit(double amount) { // Deposit function
-		super.balance = balance + amount;
-		System.out.println("Balance after deposite :" + balance);
-	}
 
-	void withdraw(double amount) { // Withdraw function
-		
-		
-	}
-	void calculateintrest() {
-		
-	}
-}
-class CA extends AC{
-	CA(){
-		System.out.println("Current account object constructed successfully");
-	}
 	
-	void showDetails() {
-		System.out.println("Your Current account has been created sucessfully !");
-	}
-}
-*/
+	
+	
+	
 
 
